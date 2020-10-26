@@ -36,6 +36,9 @@
                 {% if session.user %}
                 <a href="/" class="nav-link">Home</a>
                 {% endif %}
+                {% if session.user.role_id == 1 %}
+                <a class="nav-link" href="/user/account/">Admin</a>
+                {% endif %}
                 {% if session.user %}
                 <a class="nav-link" href="/user/account/">Mon compte</a>
                 <a class="nav-link" href="/security/logout"><i class="fas fa-sign-out-alt"></i></a>
