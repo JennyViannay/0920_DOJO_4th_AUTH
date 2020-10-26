@@ -8,48 +8,59 @@ class SecurityController extends AbstractController
 {
     public function login()
     {
-        // call new UserManager
-        // prepare $error = null
+        $userManager = new UserManager();
         $error = null;
         if ($_SERVER['REQUEST_METHOD'] === 'POST') {
-            // check password + email not empty
-            // if not empty :
-                // check email exist ? selectOneByEmail()
-                // true : 
-                    // check password is ok
-                    // true :
-                        // set session['user] = user
-                        // redirect to '/'
-                        
-                    // false :
-                        // $error = 'Password incorrect !';
-                // false :
-                    // $error = 'User not found';
-            // empty :
-                // $error = 'Tous les champs sont obligatoires !';
+            if (!empty($_POST['email']) && !empty($_POST['password'])) {
+                $user = $userManager->selectOneByEmail($_POST['email']);
+                if ($user) {
+                    if ($user->password === md5($_POST['password'])) {
+                        $_SESSION['user'] = $user;;
+                        header('Location:/');
+                    } else {
+                        $error = 'Password incorrect !';
+                    }
+                } else {
+                    $error = 'User not found';
+                }
+            } else {
+                $error = 'Tous les champs sont obligatoires !';
+            }
         }
         return $this->twig->render('Security/login.html.twig', ['error' => $error]);
     }
 
     public function register()
     {
-        // call new UserManager
-        // prepare $error = null
+        $userManager = new UserManager();
         $error = null;
         if ($_SERVER['REQUEST_METHOD'] === 'POST') {
-            // check password + password2 + email not empty
-                // if not empty :
-                    // check email/user exist ? selectOneByEmail()
-                    // false
-                    // $error = 'Email already exist';
-                // if password != password2
-                    // $error = 'Password do not match';
-                // if error is empty
-                    // create new $user array with key email & password hash (md5()) 
-                    // & role_id = 2
-                    // use insert() from UserManager to insert $user et get back new $id
-                    // set session with user from $userManager->selectOnById($id)
-                    // redirect to '/'
+            if (
+                !empty($_POST['email']) &&
+                !empty($_POST['password']) &&
+                !empty($_POST['password2'])
+            ) {
+                $user = $userManager->selectOneByEmail($_POST['email']);
+                if ($user) {
+                    $error = 'Email already exist';
+                }
+                if ($_POST['password'] != $_POST['password2']) {
+                    $error = 'Password do not match';
+                }
+                if ($error === null) {
+                    $user = [
+                        'email' => $_POST['email'],
+                        'password' => md5($_POST['password']),
+                        'role_id' => 2
+                    ];
+                    $userId = $userManager->insert($user);
+                    $user = $userManager->selectOneById($userId);
+                    if ($user) {
+                        $_SESSION['user'] = $user;
+                        header('Location:/');
+                    }
+                }
+            }
         }
         return $this->twig->render('Security/register.html.twig', ['error' => $error]);
     }

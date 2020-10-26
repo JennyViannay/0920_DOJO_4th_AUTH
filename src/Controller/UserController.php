@@ -2,22 +2,24 @@
 
 namespace App\Controller;
 
-class HomeController extends AbstractController
+use App\Model\UserManager;
+
+class UserController extends AbstractController
 {
 
     /**
-     * Display home page
+     * Display account user page
      *
      * @return string
      * @throws \Twig\Error\LoaderError
      * @throws \Twig\Error\RuntimeError
      * @throws \Twig\Error\SyntaxError
      */
-    public function index()
+    public function account()
     {
         if(!isset($_SESSION['user'])){
             header('Location:/security/login');
         }
-        return $this->twig->render('Home/index.html.twig');
+        return $this->twig->render('User/account.html.twig');
     }
 }
