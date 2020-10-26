@@ -33,6 +33,4 @@ define('APP_DB_PWD', 'your_db_password');
 
 ### Lock access to home from user not logged
 
-### Create UserController & route account without param $userId in URL (TIPS : use session)
-
 ### BONUS :: Lock access to /admin/index from user not logged with admin role
