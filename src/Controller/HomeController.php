@@ -15,9 +15,7 @@ class HomeController extends AbstractController
      */
     public function index()
     {
-        if(!isset($_SESSION['user'])){
-            header('Location:/security/login');
-        }
+        // TODO : ACCESS ONLY FOR USER LOGGED
         return $this->twig->render('Home/index.html.twig');
     }
 }

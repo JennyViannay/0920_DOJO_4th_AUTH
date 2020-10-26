@@ -15,10 +15,7 @@ class AdminController extends AbstractController
      */
     public function index()
     {
-        if(isset($_SESSION['user']) && $_SESSION['user']->role_id != 1){
-            return $this->twig->render('Admin/index.html.twig');
-        }
-        session_destroy();
+        // TODO : ACCESS ONLY FOR USER LOGGED WITH ADMIN ROLE
         header('Location:/security/login');
     }
 }
