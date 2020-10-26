@@ -16,6 +16,6 @@ class AdminController extends AbstractController
     public function index()
     {
         // TODO : ACCESS ONLY FOR USER LOGGED WITH ADMIN ROLE
-        header('Location:/security/login');
+        return $this->twig->render('Admin/index.html.twig');
     }
 }

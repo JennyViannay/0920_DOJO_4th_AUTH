@@ -15,7 +15,7 @@ class HomeController extends AbstractController
      */
     public function index()
     {
-        // TODO : ACCESS ONLY FOR USER LOGGED
+        // TODO : ACCESS ONLY FOR USER LOGGED  
         return $this->twig->render('Home/index.html.twig');
     }
 }

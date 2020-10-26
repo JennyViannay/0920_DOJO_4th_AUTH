@@ -20,15 +20,24 @@ class UserManager extends AbstractManager
         parent::__construct(self::TABLE);
     }
 
+    /**
+     * @param string $email
+     * @return $user || false 
+     */
     public function selectOneByEmail(string $email)
     {
-        
+       
     }
 
-    public function insert(array $user)
+    /**
+     * @param array $user
+     * @return int 
+     */
+    public function insert(array $user): int
     {
         // if ($statement->execute()) {
         //     return (int)$this->pdo->lastInsertId();
         // }
     }
+
 }
